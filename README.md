@@ -4,8 +4,6 @@
 
 This repository contains scripts used to process and visualise ChIP-seq, Hi-C and RNA-seq data.
 
-insert image here
-
 ## ChIP-seq
 ##### Chromatin ImmunoPrecipitation sequencing
 
