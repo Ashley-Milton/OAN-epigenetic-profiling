@@ -18,6 +18,8 @@ Hi-C data processing scripts available here include those for quality control ([
 
 Hi-C data visualisation/analysis scripts available here include those for generating distance-dependent Hi-C contact plots, counting intra- and inter-chromosomal interactions, generating inter-chromosomal interaction plots and generating a top ten chromosome pair plot.
 
+Note: if there is a disparity in the quality of the data, an appropriate subset may be taken to be used in comparative analyses.
+
 ## RNA-seq
 ##### RNA sequencing
 
