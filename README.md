@@ -9,7 +9,7 @@ insert image here
 ## ChIP-seq
 ##### Chromatin ImmunoPrecipitation sequencing
 
-ChIP-seq data processing scripts available here include those for quality control ([FastQC](https://github.com/s-andrews/FastQC) and [MultiQC](https://github.com/MultiQC/MultiQC)), read trimming ([Trimmomatic](https://github.com/usadellab/Trimmomatic)), read mapping to a reference genome ([Subread](https://github.com/ShiLab-Bioinformatics/subread)), and ChIP peak calling (macs2). 
+ChIP-seq data processing scripts available here include those for quality control ([FastQC](https://github.com/s-andrews/FastQC) and [MultiQC](https://github.com/MultiQC/MultiQC)), read trimming ([Trimmomatic](https://github.com/usadellab/Trimmomatic)), read mapping to a reference genome ([Subread](https://github.com/ShiLab-Bioinformatics/subread)), and ChIP peak calling ([macs2](https://github.com/macs3-project/MACS)). 
 
 ChIP-seq data visualisation/analysis scripts available here include those for intersecting ChIP data with transcription start site (TSS) information, generating TSS metagene plots, calculating ChIP peak densities and performing non-parametric statistical tests.
 
