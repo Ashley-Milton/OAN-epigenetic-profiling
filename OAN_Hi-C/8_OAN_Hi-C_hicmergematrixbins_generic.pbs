@@ -1,0 +1,30 @@
+#!/bin/bash
+ 
+#PBS -N HiC_Merge_Matrix_Bins
+#PBS -l select=1:ncpus=1:mem=50gb
+#PBS -l walltime=6:00:00
+#PBS -j oe
+#PBS -M email
+#PBS -m ae
+
+# SET VARIABLES
+indir="/path/to/hicsummatrices/outfiles"
+outdir="/path/to/outdir"
+binsize="10kb"
+
+source ~/.bashrc
+conda activate hicexplorer
+
+cd $indir
+
+# Merge matrix bins to make 500kb matrices from 10kb matrices
+
+# Iterate over all .h5 matrices in the directory that contain ${binsize}_bin in their names
+for matrix in *${binsize}_bin.h5
+do
+  # Generate output file name by replacing binsize with 500kb
+  outFileName="${matrix/${binsize}_bin/500kb_bin}"
+  hicMergeMatrixBins --matrix $matrix \
+  --outFileName "${outdir}/${outFileName}" \
+  --numBins 50
+done

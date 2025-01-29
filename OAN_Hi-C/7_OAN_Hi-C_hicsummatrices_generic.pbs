@@ -1,0 +1,42 @@
+#!/bin/bash
+
+#PBS -N HiC_SumMatrices
+#PBS -l select=1:ncpus=1:mem=20gb
+#PBS -l walltime=2:00:00
+#PBS -j oe
+#PBS -M email
+#PBS -m ae
+
+# SET VARIABLES
+indir="/path/to/hicbuildmatrix/outfiles"
+outdir="/path/to/outdir"
+binsize="10kb"
+
+source ~/.bashrc
+conda activate hicexplorer
+
+cd ${indir}
+
+# Combining all male matrices
+hicSumMatrices --matrices mpimg_L20932-1_Platypus-5-1_S56_${binsize}_bin_matrix.h5 \
+mpimg_L20933-1_Platypus-5-2_S57_${binsize}_bin_matrix.h5 \
+mpimg_L20934-1_Platypus-5-3_S58_${binsize}_bin_matrix.h5 \
+mpimg_L20935-1_Platypus-5-4_S59_${binsize}_bin_matrix.h5 \
+--outFileName ${outdir}/Male_matrix_${binsize}_bin.h5
+
+# Combining all female matrices
+hicSumMatrices --matrices mpimg_L20936-1_Platypus-3-1_S1_${binsize}_bin_matrix.h5 \
+mpimg_L20937-1_Platypus-3-2_S2_${binsize}_bin_matrix.h5 \
+--outFileName ${outdir}/Female_matrix_${binsize}_bin.h5
+
+# Combining all male subset matrices
+hicSumMatrices --matrices mpimg_L20932-1_Platypus-5-1_S56_subset_${binsize}_bin_matrix.h5 \
+mpimg_L20933-1_Platypus-5-2_S57_subset_${binsize}_bin_matrix.h5 \
+mpimg_L20934-1_Platypus-5-3_S58_subset_${binsize}_bin_matrix.h5 \
+mpimg_L20935-1_Platypus-5-4_S59_subset_${binsize}_bin_matrix.h5 \
+--outFileName ${outdir}/Male_matrix_subset_${binsize}_bin.h5
+
+# Combining only two male subset matrices (1 and 3, the two middle size files) to be equivalent to the number of female matrices (2)
+hicSumMatrices --matrices mpimg_L20932-1_Platypus-5-1_S56_subset_${binsize}_bin_matrix.h5 \
+mpimg_L20934-1_Platypus-5-3_S58_subset_${binsize}_bin_matrix.h5 \
+--outFileName ${outdir}/Male_matrix_subset_2samplesonly_13_${binsize}_bin.h5

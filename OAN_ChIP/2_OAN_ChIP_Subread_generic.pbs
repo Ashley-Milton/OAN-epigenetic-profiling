@@ -1,0 +1,48 @@
+#!/bin/bash
+
+#PBS -N Subread
+#PBS -l nodes=1:ppn=16
+#PBS -l mem=100gb
+#PBS -l walltime=12:00:00
+#PBS -j oe
+#PBS -M email
+#PBS -m ae
+
+#This script could be re-written more efficiently, but this is how it was run
+
+module load subread/2.0.1
+
+#F_H3K27me3
+subread-align -P 6 -t 1 -i /path/to/genome/subreadindex/OrnAna1 \
+-r /path/to/trimmed/reads/F_H3K27me3.trimmed.fq.gz \
+-o /path/to/outdir/F_H3K27me3.subread.bam
+#F_H3K9me2
+subread-align -P 6 -t 1 -i /path/to/genome/subreadindex/OrnAna1 \
+-r /path/to/trimmed/reads/F_H3K9me2.trimmed.fq.gz \
+-o /path/to/outdir/F_H3K9me2.subread.bam
+#F_H3K9me3
+subread-align -P 6 -t 1 -i /path/to/genome/subreadindex/OrnAna1 \
+-r /path/to/trimmed/reads/F_H3K9me3.trimmed.fq.gz \
+-o /path/to/outdir/F_H3K9me3.subread.bam
+#F_H4K20me1
+subread-align -P 6 -t 1 -i /path/to/genome/subreadindex/OrnAna1 \
+-r /path/to/trimmed/reads/F_H4K20me1.trimmed.fq.gz \
+-o /path/to/outdir/F_H4K20me1.subread.bam
+
+
+#M_H3K27me3
+subread-align -P 6 -t 1 -i /path/to/genome/subreadindex/OrnAna1 \
+-r /path/to/trimmed/reads/M_H3K27me3.trimmed.fq.gz \
+-o /path/to/outdir/M_H3K27me3.subread.bam
+#M_H3K9me2
+subread-align -P 6 -t 1 -i /path/to/genome/subreadindex/OrnAna1 \
+-r /path/to/trimmed/reads/M_H3K9me2.trimmed.fq.gz \
+-o /path/to/outdir/M_H3K9me2.subread.bam
+#M_H3K9me3
+subread-align -P 6 -t 1 -i /path/to/genome/subreadindex/OrnAna1 \
+-r /path/to/trimmed/reads/M_H3K9me3.trimmed.fq.gz \
+-o /path/to/outdir/M_H3K9me3.subread.bam
+#M_H4K20me1
+subread-align -P 6 -t 1 -i /path/to/genome/subreadindex/OrnAna1 \
+-r /path/to/trimmed/reads/M_H4K20me1.trimmed.fq.gz \
+-o /path/to/outdir/M_H4K20me1.subread.bam

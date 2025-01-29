@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#PBS -N HiC_Normalize
+#PBS -l select=1:ncpus=1:mem=10gb
+#PBS -l walltime=2:00:00
+#PBS -j oe
+#PBS -M email
+#PBS -m ae
+
+# SET VARIABLES
+indir="/path/to/matrix/files"
+outdir="/path/to/outdir"
+binsize="500kb"
+
+source ~/.bashrc
+conda activate hicexplorer
+
+hicNormalize --matrices ${indir}/Male_matrix_${binsize}_bin.h5 \
+${indir}/Female_matrix_${binsize}_bin.h5 \
+${indir}/Male_matrix_subset_2samplesonly_13_${binsize}_bin.h5 \
+--normalize smallest \
+--outFileName ${outdir}/Male_matrix_${binsize}_bin_normalised.h5 \
+${outdir}/Female_matrix_${binsize}_bin_normalised.h5 \
+${outdir}/Male_matrix_subset_2samplesonly_13_${binsize}_bin_normalised.h5

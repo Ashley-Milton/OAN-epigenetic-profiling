@@ -1,0 +1,31 @@
+#!/bin/bash
+ 
+#PBS -N HiC_PlotDistVsCounts
+#PBS -l select=1:ncpus=1:mem=20gb
+#PBS -l walltime=1:00:00
+#PBS -j oe
+#PBS -M email
+#PBS -m ae
+
+# SET VARIABLES
+indir="/path/to/normalised/corrected/matrix/files"
+outdir="/path/to/outdir"
+binsize="500kb"
+
+source ~/.bashrc
+conda activate hicexplorer
+
+matrices=$(ls ${indir}/*${binsize}*.h5)
+
+#All chromosomes max depth 200000000
+hicPlotDistVsCounts --matrices ${matrices} \
+-o ${outdir}/Counts_vs_Dist_200000000_${binsize}.pdf \
+--labels "Female ${binsize}" "Male ${binsize}" "Male subset ${binsize}" \
+--maxdepth 200000000
+
+#Per chromosome max depth 200000000
+hicPlotDistVsCounts --matrices ${matrices} \
+-o ${outdir}/Counts_vs_Dist_200000000_${binsize}_perchromosome.pdf \
+--labels "Female ${binsize}" "Male ${binsize}" "Male subset ${binsize}" \
+--perchr \
+--maxdepth 200000000

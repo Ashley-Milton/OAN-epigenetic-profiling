@@ -1,0 +1,35 @@
+#!/bin/bash 
+#PBS -N Trimmomatic_OAN_Hi-C_parallel
+#PBS -l select=1:ncpus=8:mem=120gb
+#PBS -l walltime=8:00:00
+#PBS -j oe
+#PBS -WMail_Users=email
+#PBS -m ae
+
+### set the following variables (lines 15 - 19)
+# directory containing all your raw sequences
+# output directory
+# file extension identifier to identify R1 and R2 file, (usually everything including and after "R1" or "R2"). NOTE THAT only the R1 identifier will be used to select input sequences, so make sure that the R1 and R2 raw matching files have identical file name up until the "R1" and "R2" extension
+# trimmomatic trimming options
+
+indir="/path/to/dir/with/rawdata"
+outdir="/path/to/out/dir"
+R1identifier="R1_001.fastq.gz" #for example
+R2identifier="R2_001.fastq.gz"
+trim_option="HEADCROP:10 TRAILING:3 SLIDINGWINDOW:5:15 MINLEN:30"
+
+### NOTE, make sure you see all of your raw R1 input files with the following ls command in your ${indir}
+# ls *${R1identifier}
+
+############################################################################################################################
+
+module load trimmomatic/0.39 parallel
+cd ${indir}
+
+for f in $(ls *${R1identifier}); do echo ${f/${R1identifier}/}; done \
+| parallel --jobs ${NCPUS} \
+trimmomatic PE -threads ${NCPUS} -phred33 \
+{}${R1identifier} \
+{}${R2identifier} \
+-baseout ${outdir}/{}trimmed.fq.gz \
+ILLUMINACLIP:/path/to/TruSeq3-PE-2.fa:2:30:10 ${trim_option}

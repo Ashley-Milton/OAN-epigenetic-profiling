@@ -1,0 +1,21 @@
+#!/bin/bash
+ 
+#PBS -N Platypus_trimmomatic_ChIP
+#PBS -l select=1:ncpus=16:mem=20gb
+#PBS -l walltime=3:00:00
+#PBS -j oe
+#PBS -M email
+#PBS -m ae
+
+#This script could be re-written more efficiently, but this is how it was run
+
+module load trimmomatic/0.38
+
+java -jar /apps/trimmomatic/0.38/trimmomatic-0.38.jar SE -threads 16 /path/to/reads/F_H3K27me3.fq.gz /path/to/outdir/F_H3K27me3.trimmed.fq.gz ILLUMINACLIP:TruSeq3-SE:2:30:10 HEADCROP:10 SLIDINGWINDOW:5:15 MINLEN:30 
+java -jar /apps/trimmomatic/0.38/trimmomatic-0.38.jar SE -threads 16 /path/to/reads/F_H3K9me2.fq.gz /path/to/outdir/F_H3K9me2.trimmed.fq.gz ILLUMINACLIP:TruSeq3-SE:2:30:10 HEADCROP:10 SLIDINGWINDOW:5:15 MINLEN:30 
+java -jar /apps/trimmomatic/0.38/trimmomatic-0.38.jar SE -threads 16 /path/to/reads/F_H3K9me3.fq.gz /path/to/outdir/F_H3K9me3.trimmed.fq.gz ILLUMINACLIP:TruSeq3-SE:2:30:10 HEADCROP:10 SLIDINGWINDOW:5:15 MINLEN:30 
+java -jar /apps/trimmomatic/0.38/trimmomatic-0.38.jar SE -threads 16 /path/to/reads/F_H4K20me1.fq.gz /path/to/outdir/F_H4K20me1.trimmed.fq.gz ILLUMINACLIP:TruSeq3-SE:2:30:10 HEADCROP:10 SLIDINGWINDOW:5:15 MINLEN:30 
+java -jar /apps/trimmomatic/0.38/trimmomatic-0.38.jar SE -threads 16 /path/to/reads/M_H3K27me3.fq.gz /path/to/outdir/M_H3K27me3.trimmed.fq.gz ILLUMINACLIP:TruSeq3-SE:2:30:10 HEADCROP:10 SLIDINGWINDOW:5:15 MINLEN:30 
+java -jar /apps/trimmomatic/0.38/trimmomatic-0.38.jar SE -threads 16 /path/to/reads/M_H3K9me2.fq.gz /path/to/outdir/M_H3K9me2.trimmed.fq.gz ILLUMINACLIP:TruSeq3-SE:2:30:10 HEADCROP:10 SLIDINGWINDOW:5:15 MINLEN:30 
+java -jar /apps/trimmomatic/0.38/trimmomatic-0.38.jar SE -threads 16 /path/to/reads/M_H3K9me3.fq.gz /path/to/outdir/M_H3K9me3.trimmed.fq.gz ILLUMINACLIP:TruSeq3-SE:2:30:10 HEADCROP:10 SLIDINGWINDOW:5:15 MINLEN:30 
+java -jar /apps/trimmomatic/0.38/trimmomatic-0.38.jar SE -threads 16 /path/to/reads/M_H4K20me1.fq.gz /path/to/outdir/M_H4K20me1.trimmed.fq.gz ILLUMINACLIP:TruSeq3-SE:2:30:10 HEADCROP:10 SLIDINGWINDOW:5:15 MINLEN:30 

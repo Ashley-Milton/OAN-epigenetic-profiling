@@ -1,0 +1,36 @@
+#!/bin/bash
+
+#PBS -N HiC_bamtools_stats
+#PBS -l select=1:ncpus=1:mem=20gb
+#PBS -l walltime=6:00:00
+#PBS -j oe
+#PBS -M email
+#PBS -m ae
+
+# SET VARIABLES
+indir="/path/to/bamfiles"
+outdir="/path/to/outdir"
+
+module load bamtools/2.5.2
+
+# Create a header for the output table
+echo -e "File Name\tMapped Reads\tSex" > ${outdir}/output_table.txt
+
+# Loop over all BAM files in the input directory
+for bamfile in ${indir}/*.bam
+do
+    # Use bamtools to get the number of mapped reads
+    mapped_reads=$(bamtools stats -in "$bamfile" | grep 'Mapped reads:' | cut -f 1)
+
+    # Determine the sex of the sample based on the file name
+    if [[ $bamfile == *"Platypus-5-"* ]]; then
+        sex="M"
+    elif [[ $bamfile == *"Platypus-3-"* ]]; then
+        sex="F"
+    else
+        sex="Unknown"
+    fi
+
+    # Add the file name, the number of mapped reads, and the sex to the output table
+    echo -e "$(basename $bamfile)\t$mapped_reads\t$sex" >> ${outdir}/output_table.txt
+done

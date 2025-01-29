@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#PBS -N OAN_featureCounts
+#PBS -l select=1:ncpus=8:mem=30gb
+#PBS -l walltime=1:00:00
+#PBS -j oe
+#PBS -M email
+#PBS -m ae
+
+module load subread/2.0.2
+
+featureCounts \
+-O \
+-s 0 \
+-p \
+-a /path/to/annotation_file.gtf \
+-t exon \
+-g gene \
+-T ${NCPUS} \
+-o /path/to/outdir/output_file.txt \
+/path/to/subread-align/outdir/*_subread.bam

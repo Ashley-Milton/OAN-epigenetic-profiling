@@ -1,0 +1,47 @@
+#!/bin/bash
+
+#PBS -N hicBuildMatrix_OAN_10kb_bins
+#PBS -l select=1:ncpus=16:mem=180gb
+#PBS -l walltime=12:00:00
+#PBS -j oe
+#PBS -M email
+#PBS -m ae
+
+# SET VARIABLES
+indir="/path/to/bamfiles"
+outdir="/path/to/outdir"
+binsize=10000 #10kb
+
+#conda init
+source ~/.bashrc
+conda activate hicexplorer
+
+cd ${indir}
+
+#subsets
+for sample in $(ls *R1_bwa.subset.bam | sed 's/_R1_bwa.subset.bam//'); do
+    echo ${sample}
+    hicBuildMatrix --samFiles ${sample}_R1_bwa.subset.bam ${sample}_R2_bwa.subset.bam \
+    --outFileName ${outdir}/${sample}_subset_10kb_bin_matrix.h5 \
+    --QCfolder ${outdir}/${sample}_subset_10kb_bin_QC_folder \
+    --restrictionCutFile /path/to/restriction/enzyme/cut/file/Rest_site_positions_DpnII.bed \
+    --binSize ${binsize} \
+    --restrictionSequence GATC \
+    --danglingSequence GATC \
+    --genomeAssembly mOrnAna1.pri.v4 \
+    --threads ${NCPUS}
+done
+
+#normal files
+for sample in $(ls *R1_bwa.bam | sed 's/_R1_bwa.bam//'); do
+    echo ${sample}
+    hicBuildMatrix --samFiles ${sample}_R1_bwa.bam ${sample}_R2_bwa.bam \
+    --outFileName ${outdir}/${sample}_10kb_bin_matrix.h5 \
+    --QCfolder ${outdir}/${sample}_QC_folder \
+    --restrictionCutFile /path/to/restriction/enzyme/cut/file/Rest_site_positions_DpnII.bed \
+    --binSize ${binsize} \
+    --restrictionSequence GATC \
+    --danglingSequence GATC \
+    --genomeAssembly mOrnAna1.pri.v4 \
+    --threads ${NCPUS}
+done

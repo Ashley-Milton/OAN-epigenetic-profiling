@@ -1,0 +1,26 @@
+#!/bin/bash
+ 
+#PBS -N HiC_Correct_Diagnostic_Plots
+#PBS -l select=1:ncpus=1:mem=10gb
+#PBS -l walltime=6:00:00
+#PBS -j oe
+#PBS -M email
+#PBS -m ae
+
+# SET VARIABLES
+indir="/path/to/normalised/matrix/files"
+outdir="/path/to/outdir"
+binsize="500kb"
+
+declare -a matrices=("Male_matrix_${binsize}_bin_normalised.h5" 
+"Female_matrix_${binsize}_bin_normalised.h5" 
+"Male_matrix_subset_2samplesonly_13_${binsize}_bin_normalised.h5")
+
+source ~/.bashrc
+conda activate hicexplorer
+
+for matrix in "${matrices[@]}"
+do
+    hicCorrectMatrix diagnostic_plot --matrix ${indir}/${matrix} \
+    -o ${outdir}/Diagnostic_plot_${matrix%.h5}.png
+done

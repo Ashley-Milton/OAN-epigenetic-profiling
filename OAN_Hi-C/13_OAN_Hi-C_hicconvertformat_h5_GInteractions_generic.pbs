@@ -1,0 +1,22 @@
+#!/bin/bash
+ 
+#PBS -N HiC_ConvertFormat
+#PBS -l select=1:ncpus=1:mem=70gb
+#PBS -l walltime=3:00:00
+#PBS -j oe
+#PBS -M email
+#PBS -m ae
+
+# SET VARIABLES
+indir="/path/to/normalised/corrected/matrix/files"
+outdir="/path/to/outdir"
+
+source ~/.bashrc
+conda activate hicexplorer
+
+for file in ${indir}/*.h5; do
+    hicConvertFormat -m $file \
+    --inputFormat h5 \
+    -o "${outdir}/$(basename "${file%.h5}")" \
+    --outputFormat ginteractions
+done

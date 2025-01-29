@@ -1,0 +1,110 @@
+#!/bin/bash
+
+#PBS -N Platypus_macs2_peaks
+#PBS -l select=1:ncpus=8:mem=100gb
+#PBS -l walltime=8:00:00
+#PBS -j oe
+#PBS -M email
+#PBS -m ae
+
+#This script could be re-written more efficiently, but this is how it was run
+
+cd $PBS_O_WORKDIR
+
+module load python/2.7.15
+
+#F_H3K27me3
+macs2 callpeak \
+-t /path/to/bamfiles/F_H3K27me3.subread.bam \
+-c /path/to/control/file/dir/mpimg_L22950-1_Pool-9-318_S23_read.bam \
+-f BAM \
+-g 1.8e9 \
+-n F_H3K27me3 \
+-B \
+--broad \
+--outdir /path/to/outdir/ \
+-q 0.05
+
+#F_H3K9me2
+macs2 callpeak \
+-t /path/to/bamfiles/F_H3K9me2.subread.bam \
+-c /path/to/control/file/dir/mpimg_L22950-1_Pool-9-318_S23_read.bam \
+-f BAM \
+-g 1.8e9 \
+-n F_H3K9me2 \
+-B \
+--broad \
+--outdir /path/to/outdir/ \
+-q 0.05
+
+#F_H3K9me3
+macs2 callpeak \
+-t /path/to/bamfiles/F_H3K9me3.subread.bam \
+-c /path/to/control/file/dir/mpimg_L22950-1_Pool-9-318_S23_read.bam \
+-f BAM \
+-g 1.8e9 \
+-n F_H3K9me3 \
+-B \
+--broad \
+--outdir /path/to/outdir/ \
+-q 0.05
+
+#F_H4K20me1
+macs2 callpeak \
+-t /path/to/bamfiles/F_H4K20me1.subread.bam \
+-c /path/to/control/file/dir/mpimg_L22950-1_Pool-9-318_S23_read.bam \
+-f BAM \
+-g 1.8e9 \
+-n F_H4K20me1 \
+-B \
+--broad \
+--outdir /path/to/outdir/ \
+-q 0.05
+
+#M_H3K27me3
+macs2 callpeak \
+-t /path/to/bamfiles/M_H3K27me3.subread.bam \
+-c /path/to/control/file/dir/mpimg_L22956-1_Pool-6-378_S17_read.bam \
+-f BAM \
+-g 1.8e9 \
+-n M_H3K27me3 \
+-B \
+--broad \
+--outdir /path/to/outdir/ \
+-q 0.05
+
+#M_H3K9me2
+macs2 callpeak \
+-t /path/to/bamfiles/M_H3K9me2.subread.bam \
+-c /path/to/control/file/dir/mpimg_L22956-1_Pool-6-378_S17_read.bam \
+-f BAM \
+-g 1.8e9 \
+-n M_H3K9me2 \
+-B \
+--broad \
+--outdir /path/to/outdir/ \
+-q 0.05
+
+#M_H3K9me3
+macs2 callpeak \
+-t /path/to/bamfiles/M_H3K9me3.subread.bam \
+-c /path/to/control/file/dir/mpimg_L22956-1_Pool-6-378_S17_read.bam \
+-f BAM \
+-g 1.8e9 \
+-n M_H3K9me3 \
+-B \
+--broad \
+--outdir /path/to/outdir/ \
+-q 0.05
+
+#M_H4K20me1
+macs2 callpeak \
+-t /path/to/bamfiles/M_H4K20me1.subread.bam \
+-c /path/to/control/file/dir/mpimg_L22956-1_Pool-6-378_S17_read.bam \
+-f BAM \
+-g 1.8e9 \
+-n M_H4K20me1 \
+-B \
+--broad \
+--outdir /path/to/outdir/ \
+-q 0.05

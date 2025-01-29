@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#PBS -N BWA_Align_OAN_Hi-C
+#PBS -l select=1:ncpus=16:mem=180gb
+#PBS -l walltime=48:00:00
+#PBS -j oe
+#PBS -M email
+#PBS -m ae
+
+# SET VARIABLES
+indir="/path/to/trimmed/reads"
+outdir="/path/to/outdir"
+index="/path/to/genome/dir/genome.fa"
+R1identifier="__trimmed_1P.fq.gz" #for example
+R2identifier="__trimmed_2P.fq.gz"
+
+# SCRIPT
+module load bwa/0.7.17 parallel
+module load samtools/1.15
+
+cd ${indir}
+
+for f in $(ls *${R1identifier}); do echo ${f/${R1identifier}/}; done \
+| parallel --jobs ${NCPUS} \
+"bwa mem -t ${NCPUS} -A1 -B4 -E50 -L0 ${index} \
+{}${R1identifier} 2>>{}_R1.log | samtools view -Shb - > ${outdir}/{}_R1_bwa.bam; \
+bwa mem -t ${NCPUS} -A1 -B4 -E50 -L0 ${index} \
+{}${R2identifier} 2>>{}_R2.log | samtools view -Shb - > ${outdir}/{}_R2_bwa.bam"

@@ -1,0 +1,27 @@
+#!/bin/bash
+ 
+#PBS -N HiC_Correct_Correct
+#PBS -l select=1:ncpus=1:mem=50gb
+#PBS -l walltime=6:00:00
+#PBS -j oe
+#PBS -M email
+#PBS -m ae
+
+# SET VARIABLES
+indir="/path/to/normalised/matrix/files"
+outdir="/path/to/outdir"
+binsize="500kb"
+
+declare -a matrices=("Male_matrix_${binsize}_bin_normalised.h5" 
+"Female_matrix_${binsize}_bin_normalised.h5" 
+"Male_matrix_subset_2samplesonly_13_${binsize}_bin_normalised.h5")
+
+source ~/.bashrc
+conda activate hicexplorer
+
+for matrix in "${matrices[@]}"
+do
+    hicCorrectMatrix correct --matrix ${indir}/${matrix} \
+    --filterThreshold -2 3 \
+    -o ${outdir}/${matrix%.h5}_corrected_-2_3.h5
+done

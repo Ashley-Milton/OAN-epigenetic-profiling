@@ -1,0 +1,38 @@
+#!/bin/bash
+ 
+#PBS -N HiC_bam_subsetting
+#PBS -l select=1:ncpus=1:mem=100gb
+#PBS -l walltime=12:00:00
+#PBS -j oe
+#PBS -M email
+#PBS -m ae
+
+# SET VARIABLES
+indir="/path/to/bamfiles"
+outdir="/path/to/outdir"
+fraction=0.016  # Adjust this value based on the ratio of female to male reads calculated previously
+seed=99  # Set a seed for the random number generator
+
+module load samtools/1.15.1
+
+# Subset male BAM files
+cd $indir
+for file in *Platypus-5-*_R1_bwa.bam; do
+  base_name="${file%_R1_bwa.bam}"
+  output_file_R1="${base_name}_R1_bwa.subset.bam"
+  output_file_R2="${base_name}_R2_bwa.subset.bam"
+  samtools view -h --subsample-seed ${seed} --subsample ${fraction} $file > $outdir/$output_file_R1
+  samtools view -h --subsample-seed ${seed} --subsample ${fraction} ${base_name}_R2_bwa.bam > $outdir/$output_file_R2
+
+  # Count reads in output files and compare common reads
+  R1_IDs=$(samtools view $outdir/$output_file_R1 | awk '{print $1}' | sort)
+  R2_IDs=$(samtools view $outdir/$output_file_R2 | awk '{print $1}' | sort)
+  common_IDs=$(comm -12 <(echo "$R1_IDs") <(echo "$R2_IDs"))
+
+  # Count the number of reads in each subset file and the number of common reads
+  R1_count=$(echo "$R1_IDs" | wc -l)
+  R2_count=$(echo "$R2_IDs" | wc -l)
+  common_count=$(echo "$common_IDs" | wc -l)
+
+  echo "For $base_name, R1 reads: $R1_count, R2 reads: $R2_count, common reads $common_count"
+done
