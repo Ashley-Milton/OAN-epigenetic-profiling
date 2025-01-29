@@ -2,7 +2,7 @@
 
 ## General overview
 
-This repository contains scripts used to process and visualise ChIP-seq, Hi-C and RNA-seq data.
+This repository contains scripts used to process and visualise ChIP-seq, Hi-C and RNA-seq data from platypus (*Ornithorynchus anatinus*).
 
 ## ChIP-seq
 ##### Chromatin ImmunoPrecipitation sequencing
