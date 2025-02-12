@@ -109,7 +109,7 @@ for (histone in histones) {
   #Filtering data for TSS plots ---------------------------------------------------------------
   
   #Filtering for at least two datapoints per relative position, and
-  #taking median value at each position relative to TSS
+  #taking mean value at each position relative to TSS
 
   calc_pos_means <- function(data, sex) {
     meandata <- data[, count := .N, by = .(relative_pos, PAR_info)
