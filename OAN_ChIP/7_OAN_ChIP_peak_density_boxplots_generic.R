@@ -274,7 +274,7 @@ if (kruskal_test_result$p.value < 0.05) {
   #Filter for significant comparisons (adjusted p-value < 0.05)
   significant_results <- subset(results_df, adjusted_p_values < 0.05)
   
-  #Filter for significant comparisons (adjusted p-value < 0.05)
+  #Filter for non significant comparisons (adjusted p-value < 0.05)
   non_significant_results <- subset(results_df, adjusted_p_values >= 0.05)
   
   #Print significant results
