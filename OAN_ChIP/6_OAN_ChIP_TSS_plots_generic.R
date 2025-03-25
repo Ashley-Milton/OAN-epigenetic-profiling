@@ -125,6 +125,9 @@ for (histone in histones) {
   #MALE
   meandata_M <- calc_pos_means(data_M, "Male")
   
+  # Doubling the mean_height column for male X chromosomes to account for their hemizygosity
+  meandata_M$mean_height <- ifelse(meandata_M$PAR_info == "X-specific", meandata_M$mean_height*2, meandata_M$mean_height)
+  
   #Putting female and male data together in one dataframe
   meandata <- rbindlist(list(meandata_F, meandata_M))
   meandata[, sex_PAR_info := paste(sex, PAR_info, sep = " ")]
@@ -141,7 +144,7 @@ for (histone in histones) {
   meandata %>% ggplot(aes(x=relative_pos, y=mean_height, color=sex_PAR_info)) +
     geom_smooth(aes(fill=sex_PAR_info), se=T, method="loess", span = 0.35) +
     labs(x="Position relative to TSS (kb)", y=paste("Mean peak height (normalised) of", histone)) + 
-    coord_cartesian(x=c(-10000,10000))+
+    coord_cartesian(x=c(-10000,10000), y=c(0,2))+ #Change limits to suit
     theme_classic()+
     scale_color_manual(values = color_palette)+
     scale_fill_manual(values = color_palette)+
