@@ -181,7 +181,7 @@ plot <- ggplot(longData, aes(Var2, Var1, fill = value)) +
 plot
 
 #Save plot
-ggsave(paste0("plots/Platypus_Male_", binsize, "_medblueorange_lims_", lim1, "_", lim2, "_zerowindows.pdf"), plot = plot, width = 10, height = 8, units = "in", dpi = 800)
+ggsave(paste0("plots/Platypus_Male_", binsize, "_lims_", lim1, "_", lim2, "_zerowindows.pdf"), plot = plot, width = 10, height = 8, units = "in", dpi = 800)
 
 #Save longData
 write.table(longData, file = paste0("data/longDatamale_", binsize, "_zerowindows.txt"), quote = FALSE, sep = "\t", row.names = FALSE)
