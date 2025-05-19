@@ -89,10 +89,6 @@ hic.gi <- convertToGI(merged_data)
 intra <- filter(merged_data, chr1 == chr2)
 inter <- filter(merged_data, chr1 != chr2)
 
-#Add species column
-inter$species <- "Platypus Inter"
-intra$species <- "Platypus Intra"
-
 #Select interactions for each chromosome
 select_interactions <- function(data, col) {
   do.call(rbind, lapply(1:31, function(i) subset(data, data[[col]] == i)))
@@ -174,7 +170,7 @@ plot <- ggplot(longData, aes(Var2, Var1, fill = value)) +
   theme_few() +
   ggtitle(paste("Inter-chromosomal interactions for female platypus (", binsize, " bins)", sep = "")) +
   geom_tile(colour = "grey", size = 0.5) +
-  scale_fill_gradient2(name = expression("Mean\nInteractions"), low = "#000080", high = "#FF4500", mid = "white", midpoint = midp, limits = c(lim1, lim2)) +
+  scale_fill_gradient2(name = expression("Mean\nInteractions"), low = "navyblue", high = "#FF4500", mid = "white", midpoint = midp, limits = c(lim1, lim2)) +
   scale_x_discrete(name = "Chromosomes", limits = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "X1", "X2", "X3", "X4", "X5")) + 
   scale_y_discrete(name = "Chromosomes", limits = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "X1", "X2", "X3", "X4", "X5"))
 
