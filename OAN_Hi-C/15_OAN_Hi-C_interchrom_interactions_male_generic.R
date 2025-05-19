@@ -89,9 +89,9 @@ hic.gi <- convertToGI(merged_data)
 intra <- filter(merged_data, chr1 == chr2)
 inter <- filter(merged_data, chr1 != chr2)
 
-#Add specie column
-inter$specie <- "Platypus Inter"
-intra$specie <- "Platypus Intra"
+#Add speciess column
+inter$speciess <- "Platypus Inter"
+intra$speciess <- "Platypus Intra"
 
 #Select interactions for each chromosome
 select_interactions <- function(data, col) {
